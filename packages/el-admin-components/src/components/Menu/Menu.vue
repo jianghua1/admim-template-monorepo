@@ -1,23 +1,10 @@
 <template>
-  <el-menu
-    ref="menuRef"
-    v-bind="menuProps"
-    :style="{ '--bg-color': backgroundColor }"
-    class="border-r-0!"
-    @select="handleSelect"
-    @open="handleOpen"
-    @close="handleClose"
-    :default-active="getDefaultActive($route)"
-  >
+  <el-menu ref="menuRef" v-bind="menuProps" :style="{ '--bg-color': backgroundColor }" class="border-r-0!"
+    @select="handleSelect" @open="handleOpen" @close="handleClose" :default-active="getDefaultActive(route)">
     <slot name="icon"></slot>
     <div class="flex-grow" v-if="isDefined(slots['icon'])" />
-    <sub-menu
-      v-for="menu in fileredMenus"
-      :key="menu.path"
-      :data="menu"
-      :collapse="collapse"
-      v-bind="subMenuProps"
-    ></sub-menu>
+    <sub-menu v-for="menu in fileredMenus" :key="menu.path" :data="menu" :collapse="collapse"
+      v-bind="props.subMenuProps"></sub-menu>
   </el-menu>
 </template>
 
@@ -26,13 +13,14 @@ import type { MenuProps as ElMenuProps, SubMenuProps } from 'element-plus'
 import type { AppRouteMenuItem, MenuSelectEvent, IconOptions, MenuOpenCloseEvent } from './types'
 import { useMenu } from './useMenu'
 import { type RouteLocationNormalizedLoaded } from 'vue-router'
+import { useRoute } from 'vue-router';
 
 interface MenuProps extends Partial<ElMenuProps> {
   data: AppRouteMenuItem[]
   subMenuProps?: Partial<SubMenuProps>
   iconProps?: Partial<IconOptions>
 }
-
+const route = useRoute();
 const props = withDefaults(defineProps<MenuProps>(), {
   data: () => [],
   iconProps: () => ({

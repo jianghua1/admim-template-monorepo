@@ -1,5 +1,5 @@
 <template>
-  <el-form :model="model" :rules="rules" ref="formRef">
+  <el-form :model="model" :rules="rules" ref="formRef" v-bind="restProps">
     <slot name="default">
       <el-row :class="rowClass" :style="rowStyle">
         <template v-if="schema && schema.length">
@@ -23,7 +23,7 @@ const exposeEvents = ['validate', 'validateField', 'resetFields', 'clearValidate
 const props = withDefaults(defineProps<FormProps>(), {
   inline: false,
   labelPosition: 'right',
-  hideRequiredAsterisk: false,
+  hideRequiredAsterisk: true,
   requireAsteriskPosition: 'left',
   showMessage: true,
   inlineMessage: false,
@@ -44,6 +44,11 @@ const exposes = exposeEventsUtils(formRef, exposeEvents)
 defineExpose({ ...exposes })
 
 const { model, rules } = useForm(props.schema || [])
+
+const restProps = computed(() => {
+  const { model, rules, ...rest } = props
+  return rest
+})
 
 watch(
   model,

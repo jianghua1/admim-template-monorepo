@@ -8,7 +8,9 @@
     "components:build": "pnpm --filter=el-admin-components run build:all",
     "components:plugin": "pnpm --filter=el-admin-components run plugin",
     "template:dev": "pnpm --filter=admin-vue3-template run dev",
-    "template:build": "pnpm --filter=admin-vue3-template run build"
+    "template:build": "pnpm --filter=admin-vue3-template run build",
+    "template:dev2": "pnpm --filter=pk-front-vue3 run dev",
+    "template:build2": "pnpm --filter=pk-front-vue3 run build"
   },
   "keywords": [],
   "author": "",
